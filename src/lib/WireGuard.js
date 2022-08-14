@@ -233,7 +233,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     // Calculate next IP
     const clients = Object.values(config.clients);
     const clientAddress = clients[clients.length - 1].address;
-    const address = !clients ? Util.incrementIP(WG_DEFAULT_ADDRESS) : Util.incrementIP(clientAddress);
+    const address = !clientAddress ? Util.incrementIP(WG_DEFAULT_ADDRESS) : Util.incrementIP(clientAddress);
     // if (!clients) {
     //   address = Util.incrementIP(WG_DEFAULT_ADDRESS);
     // }
