@@ -232,8 +232,19 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
 
     // Calculate next IP
     const clients = Object.values(config.clients);
+    // eslint-disable-next-line no-console
+    console.log(clients);
     const clientAddress = clients[clients.length - 1].address;
-    const address = !clientAddress ? Util.incrementIP(WG_DEFAULT_ADDRESS) : Util.incrementIP(clientAddress);
+    // eslint-disable-next-line no-console
+    console.log(clientAddress);
+    const defaultAddress = WG_DEFAULT_ADDRESS;
+    // eslint-disable-next-line no-console
+    console.log(defaultAddress);
+    // eslint-disable-next-line no-console
+    console.log(!clientAddress);
+    const address = !clientAddress ? Util.incrementIP(defaultAddress) : Util.incrementIP(clientAddress);
+    // eslint-disable-next-line no-console
+    console.log(address);
     // if (!clients) {
     //   address = Util.incrementIP(WG_DEFAULT_ADDRESS);
     // }
