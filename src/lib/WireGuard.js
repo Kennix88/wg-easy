@@ -231,11 +231,11 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const preSharedKey = await Util.exec('wg genpsk');
 
     // Calculate next IP
-    const clients = Object.values(config.clients);
-    const clientAddress = clients[clients.length - 1].address;
+    const clientsArray = Object.values(config.clients);
+    const clientAddress = clientsArray[clientsArray.length - 1].address;
     let address;
-    if (!clients) {
-      address = '10.0.7.3';
+    if (!clientsArray) {
+      address = Util.incrementIP(WG_DEFAULT_ADDRESS);
     } else {
       address = Util.incrementIP(clientAddress);
     }
