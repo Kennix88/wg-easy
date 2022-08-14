@@ -235,7 +235,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const clientAddress = clients[clients.length - 1].address;
     let address;
     if (!clients) {
-      address = Util.incrementIP(WG_DEFAULT_ADDRESS);
+      address = '10.0.7.3';
     } else {
       address = Util.incrementIP(clientAddress);
     }
