@@ -234,7 +234,7 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const clientsArray = Object.values(config.clients);
     const clientAddress = clientsArray[clientsArray.length - 1].address;
     let address;
-    if (!clientsArray) {
+    if (clientsArray === undefined) {
       address = Util.incrementIP(WG_DEFAULT_ADDRESS);
     } else {
       address = Util.incrementIP(clientAddress);
