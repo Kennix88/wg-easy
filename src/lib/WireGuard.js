@@ -45,7 +45,7 @@ module.exports = class WireGuard {
           const publicKey = await Util.exec(`echo ${privateKey} | wg pubkey`, {
             log: 'echo ***hidden*** | wg pubkey',
           });
-          const address = WG_DEFAULT_ADDRESS.replace('x', '1');
+          const address = WG_DEFAULT_ADDRESS;
 
           config = {
             server: {
@@ -231,21 +231,23 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const preSharedKey = await Util.exec('wg genpsk');
 
     // Calculate next IP
-    let address;
-    for (let i = 2; i < 255; i++) {
-      const client = Object.values(config.clients).find(client => {
-        return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
-      });
+    const clients = Object.values(config.clients);
+    const clientAddress = clients[clients.length - 1].address;
+    const address = Util.incrementIP(clientAddress);
+    // for (let i = 2; i < 255; i++) {
+    //   const client = Object.values(config.clients).find(client => {
+    //     return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
+    //   });
+    //
+    //   if (!client) {
+    //     address = WG_DEFAULT_ADDRESS.replace('x', i);
+    //     break;
+    //   }
+    // }
 
-      if (!client) {
-        address = WG_DEFAULT_ADDRESS.replace('x', i);
-        break;
-      }
-    }
-
-    if (!address) {
-      throw new Error('Maximum number of clients reached.');
-    }
+    // if (!address) {
+    //   throw new Error('Maximum number of clients reached.');
+    // }
 
     // Create Client
     const clientId = uuid.v4();
