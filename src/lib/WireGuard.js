@@ -245,6 +245,9 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
     const address = !clientAddress ? Util.incrementIP(defaultAddress) : Util.incrementIP(clientAddress);
     // eslint-disable-next-line no-console
     console.log(address);
+    // eslint-disable-next-line no-console
+    console.log(address);
+
     // if (!clients) {
     //   address = Util.incrementIP(WG_DEFAULT_ADDRESS);
     // }
