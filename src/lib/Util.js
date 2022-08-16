@@ -17,17 +17,17 @@ module.exports = class Util {
     return true;
   }
 
-  static incrementIP(sIP) {
-    const tIP = sIP.split('.', 4);
+  static nextIP(startIP) {
+    const tIP = startIP.split('.', 4);
     let ip = (tIP[0] << 24) | (tIP[1] << 16) | (tIP[2] << 8) | (tIP[3] << 0);
     ip++;
-    const nIP = [
+    const nextIP = [
       (ip >> 24) & 0xff,
       (ip >> 16) & 0xff,
       (ip >> 8) & 0xff,
       (ip >> 0) & 0xff,
     ];
-    return nIP.join('.');
+    return nextIP.join('.');
   }
 
   static promisify(fn) {
