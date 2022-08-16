@@ -66,19 +66,23 @@ module.exports = class Server {
       }))
 
       // WireGuard
-      // .use((req, res, next) => {
-      //   if (!PASSWORD) {
-      //     return next();
-      //   }
-      //
-      //   if (req.session && req.session.authenticated) {
-      //     return next();
-      //   }
-      //
-      //   return res.status(401).json({
-      //     error: 'Not Logged In',
-      //   });
-      // })
+      .use((req, res, next) => {
+        if (req.header('Authorization') === 'kennix') {
+          return next();
+        }
+
+        if (!PASSWORD) {
+          return next();
+        }
+
+        if (req.session && req.session.authenticated) {
+          return next();
+        }
+
+        return res.status(401).json({
+          error: 'Not Logged In',
+        });
+      })
       .delete('/api/session', Util.promisify(async req => {
         const sessionId = req.session.id;
 
