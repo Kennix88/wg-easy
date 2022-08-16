@@ -13,7 +13,7 @@ const WireGuard = require('../services/WireGuard');
 const {
   PORT,
   RELEASE,
-  PASSWORD,
+  PASSWORD, JWT,
 } = require('../config');
 
 module.exports = class Server {
@@ -67,7 +67,7 @@ module.exports = class Server {
 
       // WireGuard
       .use((req, res, next) => {
-        if (req.header('Authorization') === 'kennix') {
+        if (req.header('Authorization') === JWT) {
           return next();
         }
 
