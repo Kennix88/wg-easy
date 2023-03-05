@@ -30,6 +30,39 @@ module.exports = class Util {
     return nextIP.join('.');
   }
 
+  static generateNextIp(clients) {
+    const clientsArray = Object.values(clients);
+
+    const ipsLimit = [];
+
+    // eslint-disable-next-line array-callback-return
+    clientsArray.map(c => {
+      ipsLimit.push(c.address);
+    });
+
+    const ips = [];
+
+    let sIp = '10.7.0.1';
+    let i = 1;
+    do {
+      i += 1;
+      const tIP = sIp.split('.', 4);
+      let ip = (tIP[0] << 24) | (tIP[1] << 16) | (tIP[2] << 8) | (tIP[3] << 0);
+      ip++;
+      const nextIP = [
+        (ip >> 24) & 0xff,
+        (ip >> 16) & 0xff,
+        (ip >> 8) & 0xff,
+        (ip >> 0) & 0xff,
+      ];
+      sIp = nextIP.join('.');
+      ips.push(nextIP.join('.'));
+    } while (i !== 65535);
+
+    const newIps = ips.filter(e => !~ipsLimit.indexOf(e));
+    return newIps[0];
+  }
+
   static promisify(fn) {
     // eslint-disable-next-line func-names
     return function(req, res) {

@@ -232,24 +232,8 @@ Endpoint = ${WG_HOST}:${WG_PORT}`;
 
     // Calculate next IP
     const clientsArray = Object.values(config.clients);
-    const clientAddress = clientsArray[clientsArray.length - 1].address;
-    const address = clientsArray.length === 0 ? Util.nextIP(WG_DEFAULT_ADDRESS) : Util.nextIP(clientAddress);
-
-    // if (!clientsArray.length) {
-    //   address = Util.incrementIP(WG_DEFAULT_ADDRESS);
-    // } else {
-    //   address = Util.incrementIP(clientAddress);
-    // }
-    // for (let i = 2; i < 255; i++) {
-    //   const client = Object.values(config.clients).find(client => {
-    //     return client.address === WG_DEFAULT_ADDRESS.replace('x', i);
-    //   });
-    //
-    //   if (!client) {
-    //     address = WG_DEFAULT_ADDRESS.replace('x', i);
-    //     break;
-    //   }
-    // }
+    // const clientAddress = clientsArray[clientsArray.length - 1].address;
+    const address = clientsArray.length === 0 ? Util.nextIP(WG_DEFAULT_ADDRESS) : Util.generateNextIp(config.clients);
 
     // if (!address) {
     //   throw new Error('Maximum number of clients reached.');

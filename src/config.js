@@ -23,6 +23,26 @@ iptables -t nat -A POSTROUTING -s ${module.exports.WG_DEFAULT_ADDRESS}/16 -o eth
 iptables -A INPUT -p udp -m udp --dport 51820 -j ACCEPT;
 iptables -A FORWARD -i wg0 -j ACCEPT;
 iptables -A FORWARD -o wg0 -j ACCEPT;
+iptables -A INPUT -m string --string "BitTorrent" --algo bm -j DROP;
+iptables -A INPUT -m string --string "BitTorrent protocol" --algo bm -j DROP;
+iptables -A INPUT -m string --string "peer_id=" --algo bm -j DROP;
+iptables -A INPUT -m string --string ".torrent" --algo bm -j DROP;
+iptables -A INPUT -m string --string "announce.php?passkey=" --algo bm -j DROP;
+iptables -A INPUT -m string --string "torrent" --algo bm -j DROP;
+iptables -A INPUT -m string --string "announce" --algo bm -j DROP;
+iptables -A INPUT -m string --string "info_hash" --algo bm -j DROP;
+iptables -A INPUT -m string --string "tracker" --algo bm -j DROP;
+iptables -A INPUT -m string --string "get_peers" --algo bm -j DROP;
+iptables -A INPUT -m string --string "announce_peer" --algo bm -j DROP;
+iptables -A INPUT -m string --string "find_node" --algo bm -j DROP;
+iptables -I FORWARD 1 -m string --string "BitTorrent" --algo bm --to 65535 -j DROP;
+iptables -I FORWARD 1 -m string --string "BitTorrent protocol" --algo bm --to 65535 -j DROP;
+iptables -I FORWARD 1 -m string --string "peer_id=" --algo bm --to 65535 -j DROP;
+iptables -I FORWARD 1 -m string --string ".torrent" --algo bm --to 65535 -j DROP;
+iptables -I FORWARD 1 -m string --string "announce.php?passkey=" --algo bm --to 65535 -j DROP;
+iptables -I FORWARD 1 -m string --string "torrent" --algo bm --to 65535 -j DROP;
+iptables -I FORWARD 1 -m string --string "announce" --algo bm --to 65535 -j DROP;
+iptables -I FORWARD 1 -m string --string "info_hash" --algo bm --to 65535 -j DROP;
 `.split('\n').join(' ');
 
 module.exports.WG_PRE_DOWN = process.env.WG_PRE_DOWN || '';
