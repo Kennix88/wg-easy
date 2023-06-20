@@ -99,6 +99,11 @@ module.exports = class Server {
         res.header('Content-Type', 'image/svg+xml');
         res.send(svg);
       }))
+      .get('/api/wireguard/client/:clientId/', Util.promisify(async (req, res) => {
+        const { clientId } = req.params;
+        const obj = await WireGuard.getClient({ clientId });
+        return obj;
+      }))
       .get('/api/wireguard/client/:clientId/configuration', Util.promisify(async (req, res) => {
         const { clientId } = req.params;
         const client = await WireGuard.getClient({ clientId });
