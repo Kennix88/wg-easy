@@ -101,8 +101,12 @@ module.exports = class Server {
       }))
       .get('/api/wireguard/client/:clientId/', Util.promisify(async (req, res) => {
         const { clientId } = req.params;
-        const obj = await WireGuard.getClient({ clientId });
-        return obj;
+        const clients = await WireGuard.getClients();
+        const client = clients.find(el => el.id === clientId);
+        if (!client) {
+          throw new ServerError(`Client Not Found: ${clientId}`, 404);
+        }
+        return client;
       }))
       .get('/api/wireguard/client/:clientId/configuration', Util.promisify(async (req, res) => {
         const { clientId } = req.params;
